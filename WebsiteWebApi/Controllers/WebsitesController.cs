@@ -173,9 +173,6 @@ namespace WebsiteWebApi.Controllers
 
             CreatedAtActionResult car = CreatedAtAction("GetWebsite", new { id = newWebsite.Id }, newWebsite);
             return car;
-
-
-
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest(ModelState);
