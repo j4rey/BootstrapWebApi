@@ -5,11 +5,16 @@ using System.Threading.Tasks;
 
 namespace WebsiteWebApi.Models.DTOs
 {
-    public class SocialTypeDTO
+    public class SocialPortalDTO
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string CSS { get; set; }
-        public int SocialPortalId { get; set; }
+
+
+        public string url { get; set; }
+
+        public SocialTypeDTO socialtype { get; set; }
+
+        public int ContactUsId { get; set; }
     }
+    
 }

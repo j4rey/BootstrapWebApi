@@ -12,6 +12,7 @@ namespace WebsiteWebApi.Models.DTOs
         public string BackgroundImageUrl { get; set; }
         public Boolean isActive { get; set; }
         public List<Paragraph> Paragraphs { get; set; }
+        public List<SocialPortalDTO> SocialPortals { get; set; }
         public int WebsiteId { get; set; }
     }
 }

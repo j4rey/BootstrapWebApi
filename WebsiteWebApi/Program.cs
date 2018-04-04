@@ -49,11 +49,11 @@ namespace WebsiteWebApi
             if (!context.SocialTypes.Any())
             {
                 context.SocialTypes.AddRange(
-                new Models.SocialType { Id = 1, Title = "Facebook", CSS = "facebook" },
+                new Models.SocialType { Id = 1, Title = "Facebook", CSS = "fa-facebook" },
                 new Models.SocialType { Id = 2, Title = "Twitter", CSS = "twitter" },
-                new Models.SocialType { Id = 3, Title = "Github", CSS = "github" },
-                new Models.SocialType { Id = 4, Title = "GooglePlus", CSS = "google-plus" },
-                new Models.SocialType { Id = 5, Title = "LinkedIn", CSS = "linkedin" }
+                new Models.SocialType { Id = 3, Title = "Github", CSS = "fa-github" },
+                new Models.SocialType { Id = 4, Title = "GooglePlus", CSS = "fa-google-plus" },
+                new Models.SocialType { Id = 5, Title = "LinkedIn", CSS = "fa-linkedin" }
             );
 
                 //context.Posts.AddRange(

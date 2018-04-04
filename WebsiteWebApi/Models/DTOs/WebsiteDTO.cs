@@ -33,8 +33,8 @@ namespace WebsiteWebApi.Models.DTOs
     {
         public WebsiteDTO website { get; set; }
         public HomeSectionDTO Home { get; set; }
-        public AboutSection about { get; set; }
-        public DownloadSection download { get; set; }
-        public ContactUsSection contactus { get; set; }
+        public AboutSectionDTO about { get; set; }
+        public DownloadSectionDTO download { get; set; }
+        public ContactUsSectionDTO contactus { get; set; }
     }
 }

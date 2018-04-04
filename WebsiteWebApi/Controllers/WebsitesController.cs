@@ -64,19 +64,59 @@ namespace WebsiteWebApi.Controllers
             //var website = await _context.Websites.SingleOrDefaultAsync(m => m.Id == id);
             var website = await _context.Websites
                 .Where(m => m.Id == id).Select(x => new WebsitesDTO()
-            {
-                website = new WebsiteDTO() {
-                    Id = x.Id,
-                    Name = x.Name,
-                    WebsiteUrl = x.WebsiteUrl
-                },
-                Home = new HomeSectionDTO() {
-                    Id = x.home.Id,
-                    Header = x.home.Header,
-                    BackgroundImageUrl = x.home.BackgroundImageUrl,
-                    Paragraphs = x.home.Paragraphs,
-                    WebsiteId = x.home.WebsiteId,
-                    isActive = x.home.isActive
+                {
+                    website = new WebsiteDTO() {
+                        Id = x.Id,
+                        Name = x.Name,
+                        WebsiteUrl = x.WebsiteUrl
+                    },
+                    Home = new HomeSectionDTO() {
+                        Id = x.home.Id,
+                        Header = x.home.Header,
+                        BackgroundImageUrl = x.home.BackgroundImageUrl,
+                        Paragraphs = x.home.Paragraphs,
+                        WebsiteId = x.home.WebsiteId,
+                        isActive = x.home.isActive
+                    },
+                    about = new AboutSectionDTO()
+                    {
+                        Id = x.about.Id,
+                        Header = x.about.Header,
+                        BackgroundImageUrl = x.about.BackgroundImageUrl,
+                        Paragraphs = x.about.Paragraphs,
+                        WebsiteId = x.about.WebsiteId,
+                        isActive = x.about.isActive
+                    },
+                    download = new DownloadSectionDTO()
+                    {
+                        Id = x.download.Id,
+                        Header = x.download.Header,
+                        BackgroundImageUrl = x.download.BackgroundImageUrl,
+                        Paragraphs = x.download.Paragraphs,
+                        WebsiteId = x.download.WebsiteId,
+                        isActive = x.download.isActive
+                    },
+                    contactus = new ContactUsSectionDTO()
+                    {
+                        Id = x.contactus.Id,
+                        Header = x.contactus.Header,
+                        BackgroundImageUrl = x.contactus.BackgroundImageUrl,
+                        Paragraphs = x.contactus.Paragraphs,
+                        WebsiteId = x.contactus.WebsiteId,
+                        isActive = x.contactus.isActive,
+                        SocialPortals = x.contactus.SocialPortals.Select(s => new SocialPortalDTO
+                        {
+                            Id = s.Id,
+                            url = s.url,
+                            ContactUsId = s.ContactUsId,
+                            socialtype = new SocialTypeDTO()
+                            {
+                                Id = s.socialtype.Id,
+                                Title = s.socialtype.Title,
+                                CSS = s.socialtype.CSS,
+                                SocialPortalId = s.socialtype.SocialPortalId
+                            }
+                        }).ToList()
                 }
 
             }).SingleOrDefaultAsync();
@@ -156,9 +196,10 @@ namespace WebsiteWebApi.Controllers
                 WebsiteId = website.Id,
                 isActive = true
             };
+            _context.HomeSections.Add(newhome);
             AboutSection newabout = new AboutSection()
             {
-                Header = website.Name + "about",
+                Header = website.Name + " about",
                 Paragraphs = new List<Paragraph>()
                 {
                     new Paragraph(){Text =  "about Para 1"},
@@ -167,7 +208,37 @@ namespace WebsiteWebApi.Controllers
                 WebsiteId = website.Id,
                 isActive = true
             };
-            _context.HomeSections.Add(newhome);
+            _context.AboutSections.Add(newabout);
+            DownloadSection newdownload = new DownloadSection()
+            {
+                Header = website.Name + " download",
+                BackgroundImageUrl = "assets/img/downloads-bg.jpg",
+                Paragraphs = new List<Paragraph>()
+                {
+                    new Paragraph(){Text =  "download Para 1"},
+                    new Paragraph(){Text =  "download Para 2" }
+                },
+                WebsiteId = website.Id,
+                isActive = true
+            };
+            _context.DownloadSections.Add(newdownload);
+            ContactUsSection newcontactus = new ContactUsSection()
+            {
+                Header = website.Name + " contactus",
+                Paragraphs = new List<Paragraph>()
+                {
+                    new Paragraph(){Text =  "contactus Para 1"}
+                },
+                WebsiteId = website.Id,
+                isActive = true
+            };
+            _context.ContactUsSections.Add(newcontactus);
+            List<SocialPortal> socials = new List<SocialPortal>()
+            {
+                new SocialPortal(){ SocialTypeId =1, url="facebook url", ContactUsId = newcontactus.Id}
+            };
+            newcontactus.SocialPortals = socials;
+
             //website.home = newhome;
             await _context.SaveChangesAsync();
 

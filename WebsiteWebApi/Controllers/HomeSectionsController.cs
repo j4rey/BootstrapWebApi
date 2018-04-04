@@ -26,9 +26,9 @@ namespace WebsiteWebApi.Controllers
 
         // GET: api/HomeSections
         [HttpGet]
-        public IEnumerable<HomeSection> GetHomeSections()
+        public IEnumerable<HomeSectionDTO> GetHomeSections()
         {
-            return _context.HomeSections.Select(x=> new HomeSection
+            return _context.HomeSections.Select(x=> new HomeSectionDTO
             {
                 Id = x.Id,
                 Header = x.Header,

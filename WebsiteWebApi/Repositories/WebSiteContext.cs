@@ -9,7 +9,7 @@ namespace WebsiteWebApi.Repositories
 {
     public class WebSiteContext : DbContext
     {
-        readonly Dictionary<string, object> defaults;
+        //readonly Dictionary<string, object> defaults;
         public WebSiteContext(DbContextOptions<WebSiteContext> options) : base(options) {
             //defaults = new Dictionary<string, object>()
             //{

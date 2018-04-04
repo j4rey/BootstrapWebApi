@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebsiteWebApi.Models;
+using WebsiteWebApi.Models.DTOs;
 using WebsiteWebApi.Repositories;
 
 namespace WebsiteWebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/AboutSections")]
+    [EnableCors("AllowAny")]
     public class AboutSectionsController : Controller
     {
         private readonly WebSiteContext _context;
@@ -23,9 +26,17 @@ namespace WebsiteWebApi.Controllers
 
         // GET: api/AboutSections
         [HttpGet]
-        public IEnumerable<AboutSection> GetAboutSections()
+        public IEnumerable<AboutSectionDTO> GetAboutSections()
         {
-            return _context.AboutSections;
+            return _context.AboutSections.Select(x => new AboutSectionDTO
+            {
+                Id = x.Id,
+                Header = x.Header,
+                BackgroundImageUrl = x.BackgroundImageUrl,
+                Paragraphs = x.Paragraphs,
+                WebsiteId = x.WebsiteId,
+                isActive = x.isActive
+            }).ToList();
         }
 
         // GET: api/AboutSections/5
@@ -37,7 +48,16 @@ namespace WebsiteWebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var aboutSection = await _context.AboutSections.SingleOrDefaultAsync(m => m.Id == id);
+            var aboutSection = await _context.AboutSections
+                .Where(x=> x.Id == id).Select(m => new AboutSectionDTO()
+                {
+                    Id = m.Id,
+                    Header = m.Header,
+                    BackgroundImageUrl = m.BackgroundImageUrl,
+                    Paragraphs = m.Paragraphs,
+                    WebsiteId = m.WebsiteId,
+                    isActive = m.isActive
+                }).SingleOrDefaultAsync();
 
             if (aboutSection == null)
             {
@@ -63,6 +83,10 @@ namespace WebsiteWebApi.Controllers
 
             _context.Entry(aboutSection).State = EntityState.Modified;
 
+            foreach (var p in aboutSection.Paragraphs)
+            {
+                _context.Entry(p).State = EntityState.Modified;
+            }
             try
             {
                 await _context.SaveChangesAsync();

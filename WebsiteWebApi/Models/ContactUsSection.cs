@@ -20,7 +20,7 @@ namespace WebsiteWebApi.Models
         public string BackgroundImageUrl { get; set; }
         public Boolean isActive { get; set; }
         public List<Paragraph> Paragraphs { get; set; }
-        public List<SocialPortal> SocialMedia { get; set; }
+        public List<SocialPortal> SocialPortals { get; set; }
         // public LatLng Latlong { get; set; }
         
         [ForeignKey("WebsiteId")]

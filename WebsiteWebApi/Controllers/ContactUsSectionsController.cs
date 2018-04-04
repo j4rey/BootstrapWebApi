@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace WebsiteWebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/ContactUsSections")]
+    [EnableCors("AllowAny")]
     public class ContactUsSectionsController : Controller
     {
         private readonly WebSiteContext _context;
@@ -62,7 +64,14 @@ namespace WebsiteWebApi.Controllers
             }
 
             _context.Entry(contactUsSection).State = EntityState.Modified;
-
+            foreach (var p in contactUsSection.Paragraphs)
+            {
+                _context.Entry(p).State = EntityState.Modified;
+            }
+            foreach (var p in contactUsSection.SocialPortals)
+            {
+                _context.Entry(p).State = EntityState.Modified;
+            }
             try
             {
                 await _context.SaveChangesAsync();
